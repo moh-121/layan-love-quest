@@ -6,16 +6,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>For Layan 💗</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Pacifico&display=swap" rel="stylesheet">
 
 <style>
 :root {
   --pink:#ffb6d5;
-  --pink-dark:#f17eaf;
   --lavender:#d9c5ff;
-  --blue:#c7e9ff;
-  --cream:#fff8fc;
   --text:#744b68;
 }
 
@@ -34,19 +30,19 @@ body {
 main {
   width:min(92%,650px);
   margin:0 auto;
-  padding:45px 0 65px;
+  padding:35px 0 90px;
   position:relative;
   z-index:2;
 }
 
 .card {
-  background:rgba(255,255,255,.82);
+  background:rgba(255,255,255,.85);
   border:2px solid white;
   border-radius:30px;
   padding:30px 22px;
   box-shadow:0 12px 35px #d89cbd30;
   margin:20px 0;
-  animation:cardAppear .6s ease both;
+  animation:appear .6s ease both;
 }
 
 h1 {
@@ -60,13 +56,6 @@ h1 {
 h2 { color:#bd83c9; }
 p { line-height:1.8; }
 
-.subtitle { font-size:1.05rem; }
-
-.decor {
-  font-size:2rem;
-  margin:12px;
-}
-
 button {
   border:0;
   border-radius:30px;
@@ -79,21 +68,18 @@ button {
   font-weight:900;
   cursor:pointer;
   box-shadow:0 5px 14px #d69cbe55;
-  transition:transform .2s,box-shadow .2s;
+  transition:transform .2s;
 }
 
-button:hover {
-  transform:translateY(-3px) scale(1.03);
-  box-shadow:0 8px 20px #d69cbe77;
-}
-
+button:hover { transform:translateY(-3px); }
 button:active { transform:scale(.95); }
 
-.secondary {
-  background:linear-gradient(110deg,#b9e4ff,#cbb6ff);
-}
-
 .hidden { display:none !important; }
+
+.decor {
+  font-size:2rem;
+  margin:12px;
+}
 
 .float {
   position:fixed;
@@ -101,7 +87,7 @@ button:active { transform:scale(.95); }
   pointer-events:none;
   z-index:1;
   animation:floatUp linear forwards;
-  opacity:.65;
+  opacity:.7;
 }
 
 @keyframes floatUp {
@@ -111,22 +97,15 @@ button:active { transform:scale(.95); }
   }
 }
 
-@keyframes cardAppear {
+@keyframes appear {
   from { opacity:0; transform:translateY(15px) scale(.97); }
   to { opacity:1; transform:translateY(0) scale(1); }
 }
 
-@keyframes popBurst {
+@keyframes burst {
   0% { transform:scale(.2); opacity:1; }
   100% { transform:scale(2.5) translateY(-55px); opacity:0; }
 }
-
-@keyframes glow {
-  0%,100% { box-shadow:0 0 10px #ffacd0; }
-  50% { box-shadow:0 0 30px #d6baff,0 0 45px #ffacd0; }
-}
-
-.ribbon { font-size:2.3rem; }
 
 #gameArea {
   position:relative;
@@ -171,9 +150,9 @@ button:active { transform:scale(.95); }
 .spark {
   position:fixed;
   pointer-events:none;
-  z-index:10;
+  z-index:20;
   font-size:25px;
-  animation:popBurst .8s ease-out forwards;
+  animation:burst .8s ease-out forwards;
 }
 
 #letter {
@@ -184,19 +163,9 @@ button:active { transform:scale(.95); }
   text-align:left;
   line-height:1.9;
   white-space:pre-line;
-  box-shadow:0 5px 20px #ed83b222;
 }
 
 #letter p { margin:0; }
-
-.letterOpen {
-  animation:letterReveal 1s ease both;
-}
-
-@keyframes letterReveal {
-  from { opacity:0; transform:scale(.85) rotate(-2deg); }
-  to { opacity:1; transform:scale(1) rotate(0); }
-}
 
 footer {
   font-size:.85rem;
@@ -204,10 +173,26 @@ footer {
   margin-top:30px;
 }
 
-.musicNote {
-  font-size:1.5rem;
-  animation:wiggle 1s infinite alternate;
-  display:inline-block;
+.musicBox {
+  background:#fff0f7;
+  border:2px solid #ffd2e5;
+  border-radius:20px;
+  padding:15px;
+  margin:20px 0;
+}
+
+.musicBox iframe {
+  display:block;
+  width:100%;
+  aspect-ratio:16/9;
+  border:0;
+  border-radius:13px;
+}
+
+.musicBox p {
+  margin:5px;
+  font-weight:800;
+  color:#bd83c9;
 }
 </style>
 </head>
@@ -216,64 +201,51 @@ footer {
 
 <div id="floating"></div>
 
-<!-- YouTube music player -->
-<div id="musicContainer" style="position:fixed;left:-1000px;top:-1000px;width:300px;height:170px;overflow:hidden;">
-  <iframe
-    id="musicPlayer"
-    width="300"
-    height="170"
-    src=""
-    title="Background music"
-    allow="autoplay; encrypted-media"
-    referrerpolicy="strict-origin-when-cross-origin">
-  </iframe>
-</div>
-
 <main>
 
-  <section class="card" id="welcome">
-    <div class="decor">🎀 🧸 💗</div>
-    <h1>For Layan</h1>
-    <p class="subtitle">A tiny little world made with a whole lot of love.</p>
-    <p>Someone very special has a little surprise waiting for her...</p>
-    <div class="decor">🌷 ✨ 🌷</div>
-    <button onclick="startGame()">Open your surprise 💌</button>
-    <p class="musicNote">🎵 A little music is waiting for you...</p>
-  </section>
+<section class="card" id="welcome">
+  <div class="decor">🎀 🧸 💗</div>
+  <h1>For Layan</h1>
+  <p>A tiny little world made with a whole lot of love.</p>
+  <p>Someone very special has a little surprise waiting for her...</p>
+  <div class="decor">🌷 ✨ 🌷</div>
+  <button onclick="startGame()">Open your surprise 💌</button>
+  <p>🎵 There's a song waiting for you...</p>
+</section>
 
-  <section class="card hidden" id="game">
-    <div class="ribbon">💝</div>
-    <h2>A little love challenge!</h2>
-    <p>Catch 15 hearts for Layan! Tap the hearts as they appear. 💗</p>
+<section class="card hidden" id="game">
+  <div class="decor">💝</div>
+  <h2>A little love challenge!</h2>
+  <p>Catch 15 hearts for Layan! Tap the hearts as they appear. 💗</p>
 
-    <div class="stats">
-      <div class="stat">💗 <span id="score">0</span>/15</div>
-      <div class="stat">⏳ <span id="time">30</span>s</div>
-    </div>
+  <div class="stats">
+    <div class="stat">💗 <span id="score">0</span>/15</div>
+    <div class="stat">⏳ <span id="time">30</span>s</div>
+  </div>
 
-    <div id="gameArea">
-      <p style="padding:35px 12px">Ready, set, catch those hearts! 💕</p>
-    </div>
+  <div id="gameArea">
+    <p style="padding:35px 12px">Ready, set, catch those hearts! 💕</p>
+  </div>
 
-    <p id="gameMessage">You've got this! 🌸</p>
-    <button id="playButton" onclick="beginRound()">Start playing 💗</button>
-  </section>
+  <p id="gameMessage">You've got this! 🌸</p>
+  <button id="playButton" onclick="beginRound()">Start playing 💗</button>
+</section>
 
-  <section class="card hidden" id="won">
-    <div class="decor">🎉 💗 🥹</div>
-    <h1>You did it!</h1>
-    <p>You collected all the hearts!</p>
-    <p>But there's one more little surprise...</p>
-    <button onclick="showLetter()">Open your letter 💌</button>
-  </section>
+<section class="card hidden" id="won">
+  <div class="decor">🎉 💗 🥹</div>
+  <h1>You did it!</h1>
+  <p>You collected all the hearts!</p>
+  <p>But there's one more little surprise...</p>
+  <button onclick="showLetter()">Open your letter 💌</button>
+</section>
 
-  <section class="card hidden" id="letterSection">
-    <div class="decor">💌 🌸 🎀</div>
-    <h1>Dear Layan...</h1>
-    <p>A little letter, from my heart to yours.</p>
+<section class="card hidden" id="letterSection">
+  <div class="decor">💌 🌸 🎀</div>
+  <h1>Dear Layan...</h1>
+  <p>A little letter, from my heart to yours.</p>
 
-    <div id="letter">
-      <p>My dearest Layan,
+  <div id="letter">
+    <p>My dearest Layan,
 
 I made this little place just for you because you deserve to feel special.
 
@@ -285,21 +257,37 @@ Thank you for being you. I hope this little surprise brings a smile to your face
 
 With all my love,
 Your favourite person 💗</p>
-    </div>
+  </div>
 
-    <div class="decor">🧸 💕 🌷</div>
-    <p>One last thing...</p>
-    <h2>You're my favourite notification. 💗</h2>
+  <div class="decor">🧸 💕 🌷</div>
+  <p>One last thing...</p>
+  <h2>You're my favourite notification. 💗</h2>
+  <button onclick="showHug()">Send a virtual hug 🫂</button>
 
-    <button onclick="showHug()">Send a virtual hug 🫂</button>
+  <div id="hug" class="hidden">
+    <h1>BIGGEST HUG EVER!!</h1>
+    <p>🫂💗🫂💗🫂</p>
+  </div>
+</section>
 
-    <div id="hug" class="hidden">
-      <h1>BIGGEST HUG EVER!!</h1>
-      <p>🫂💗🫂💗🫂</p>
-    </div>
-  </section>
+<!-- MUSIC PLAYER -->
+<section class="card">
+  <div class="musicBox">
+    <p>🎵 A song for Layan 🎀</p>
+    <h2>Iris — Goo Goo Dolls</h2>
+    <iframe
+      id="musicPlayer"
+      src="https://www.youtube.com/embed/xK4ZqrLys_k?playsinline=1&controls=1"
+      title="Iris by Goo Goo Dolls"
+      allow="autoplay; encrypted-media; picture-in-picture"
+      allowfullscreen>
+    </iframe>
+    <p>Press Play to listen to our song. 💗</p>
+  </div>
+</section>
 
-  <footer>Made with love, just for Layan 💗</footer>
+<footer>Made with love, just for Layan 💗</footer>
+
 </main>
 
 <script>
@@ -311,23 +299,19 @@ let spawnTimer = null;
 let playing = false;
 let audioContext = null;
 
-// Sound effects
+// SOUND EFFECTS
 function sound(frequency=650,duration=.12,type='sine') {
   try {
     audioContext = audioContext ||
       new (window.AudioContext || window.webkitAudioContext)();
 
-    if(audioContext.state === 'suspended') {
-      audioContext.resume();
-    }
+    if(audioContext.state === 'suspended') audioContext.resume();
 
     const oscillator = audioContext.createOscillator();
     const gain = audioContext.createGain();
 
     oscillator.type = type;
-    oscillator.frequency.setValueAtTime(
-      frequency,audioContext.currentTime
-    );
+    oscillator.frequency.setValueAtTime(frequency,audioContext.currentTime);
 
     gain.gain.setValueAtTime(.12,audioContext.currentTime);
     gain.gain.exponentialRampToValueAtTime(
@@ -359,17 +343,24 @@ function letterSound() {
   });
 }
 
-// Background music
-function playMusic() {
-  const player = document.getElementById('musicPlayer');
+// FLOATING DECORATIONS
+function floatDecor() {
+  const items = ['💗','💕','🎀','🌸','✨','🌷'];
+  const el = document.createElement('span');
 
-  if(!player.src || player.src === window.location.href) {
-    player.src =
-      'https://www.youtube-nocookie.com/embed/xK4ZqrLys_k?autoplay=1&loop=1&playlist=xK4ZqrLys_k&controls=1&playsinline=1';
-  }
+  el.className = 'float';
+  el.textContent = items[Math.floor(Math.random()*items.length)];
+  el.style.left = Math.random()*100+'vw';
+  el.style.fontSize = (16+Math.random()*20)+'px';
+  el.style.animationDuration = (6+Math.random()*5)+'s';
+
+  document.getElementById('floating').appendChild(el);
+  setTimeout(()=>el.remove(),11000);
 }
 
-// Visual heart explosion
+setInterval(floatDecor,650);
+
+// VISUAL EXPLOSION
 function burst(element) {
   const rect = element.getBoundingClientRect();
   const emojis = ['💗','💕','✨','🎀','🌸','💖'];
@@ -379,38 +370,15 @@ function burst(element) {
 
     spark.className = 'spark';
     spark.textContent = emojis[i%emojis.length];
-    spark.style.left =
-      (rect.left+Math.random()*rect.width)+'px';
-    spark.style.top =
-      (rect.top+Math.random()*rect.height)+'px';
+    spark.style.left = (rect.left+Math.random()*rect.width)+'px';
+    spark.style.top = (rect.top+Math.random()*rect.height)+'px';
 
     document.body.appendChild(spark);
-
     setTimeout(()=>spark.remove(),850);
   }
 }
 
-// Floating decorations
-function floatDecor() {
-  const items = ['💗','💕','🎀','🌸','✨','🌷'];
-
-  const el = document.createElement('span');
-  el.className = 'float';
-  el.textContent =
-    items[Math.floor(Math.random()*items.length)];
-
-  el.style.left = Math.random()*100+'vw';
-  el.style.fontSize = (16+Math.random()*20)+'px';
-  el.style.animationDuration = (6+Math.random()*5)+'s';
-
-  document.getElementById('floating').appendChild(el);
-
-  setTimeout(()=>el.remove(),11000);
-}
-
-setInterval(floatDecor,650);
-
-// Section navigation
+// NAVIGATION
 function show(id) {
   ['welcome','game','won','letterSection'].forEach(x=>{
     document.getElementById(x).classList.add('hidden');
@@ -419,15 +387,14 @@ function show(id) {
   document.getElementById(id).classList.remove('hidden');
 }
 
-// Start experience
+// START
 function startGame() {
-  playMusic();
   sound(600,.2);
   burst(document.getElementById('welcome'));
   show('game');
 }
 
-// Start mini game
+// GAME
 function beginRound() {
   clearInterval(timer);
   clearInterval(spawnTimer);
@@ -447,18 +414,15 @@ function beginRound() {
   area.innerHTML = '';
 
   spawnHeart();
-
   spawnTimer = setInterval(spawnHeart,650);
 
   timer = setInterval(()=>{
     timeLeft--;
     document.getElementById('time').textContent = timeLeft;
-
     if(timeLeft <= 0) endRound();
   },1000);
 }
 
-// Spawn hearts
 function spawnHeart() {
   if(!playing) return;
 
@@ -466,14 +430,10 @@ function spawnHeart() {
   const heart = document.createElement('button');
 
   heart.className = 'target';
-  heart.textContent =
-    ['💗','💖','💕','🌸','🎀'][Math.floor(Math.random()*5)];
+  heart.textContent = ['💗','💖','💕','🌸','🎀'][Math.floor(Math.random()*5)];
 
-  heart.style.left =
-    Math.random()*(area.clientWidth-50)+'px';
-
-  heart.style.top =
-    Math.random()*(area.clientHeight-55)+'px';
+  heart.style.left = Math.random()*(area.clientWidth-50)+'px';
+  heart.style.top = Math.random()*(area.clientHeight-55)+'px';
 
   heart.setAttribute('aria-label','Collect heart');
 
@@ -481,36 +441,29 @@ function spawnHeart() {
     if(!playing) return;
 
     score++;
-
     popSound();
     burst(heart);
 
     document.getElementById('score').textContent = score;
-
     heart.remove();
 
     if(score >= 15) {
       playing = false;
-
       clearInterval(timer);
       clearInterval(spawnTimer);
 
       winSound();
       burst(area);
-
       show('won');
     }
   };
 
   area.appendChild(heart);
-
   setTimeout(()=>heart.remove(),1600);
 }
 
-// Game ends
 function endRound() {
   playing = false;
-
   clearInterval(timer);
   clearInterval(spawnTimer);
 
@@ -520,35 +473,31 @@ function endRound() {
   document.getElementById('gameMessage').textContent =
     'You collected '+score+' hearts. You can do it!';
 
-  document.getElementById('playButton').textContent =
-    'Try again 🎀';
-
+  document.getElementById('playButton').textContent = 'Try again 🎀';
   document.getElementById('playButton').classList.remove('hidden');
 
   sound(300,.3);
 }
 
-// Open letter
+// LETTER
 function showLetter() {
   show('letterSection');
-
   letterSound();
   burst(document.getElementById('letterSection'));
 
   const letter = document.getElementById('letter');
-  letter.classList.remove('letterOpen');
-
+  letter.style.animation = 'none';
   void letter.offsetWidth;
-
-  letter.classList.add('letterOpen');
+  letter.style.animation = 'appear 1s ease';
 }
 
-// Virtual hug
+// HUG
 function showHug() {
-  document.getElementById('hug').classList.remove('hidden');
+  const hug = document.getElementById('hug');
+  hug.classList.remove('hidden');
 
   winSound();
-  burst(document.getElementById('hug'));
+  burst(hug);
 
   for(let i=0;i<18;i++) {
     setTimeout(floatDecor,i*100);
@@ -556,5 +505,6 @@ function showHug() {
 }
 
 </script>
+
 </body>
 </html>

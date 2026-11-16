@@ -1,1 +1,119 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>For Layan 💗</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(140deg,#180c20,#4c173d,#170d20);color:#fff0f6;font-family:Georgia,serif;text-align:center;min-height:100vh}
+main{padding:35px 18px;max-width:650px;margin:auto}
+section{background:#241326;border:1px solid #ff91bd66;border-radius:25px;padding:28px 20px;margin:35px auto;box-shadow:0 15px 50px #0007}
+h1{font-size:clamp(38px,10vw,65px);color:#ffc5df}
+h2{color:#ffb4d3}
+p{line-height:1.8;font-size:17px}
+button{background:linear-gradient(120deg,#ff83b9,#d83d88);border:0;border-radius:30px;padding:15px 25px;color:white;font-size:17px;font-weight:bold;margin:12px;cursor:pointer}
+.hidden{display:none!important}
+#game{height:400px;position:relative;overflow:hidden;background:#160d20;border:1px solid #ff9bc5;border-radius:18px}
+.fall{position:absolute;top:-45px;font-size:32px;animation:fall 3s linear forwards;cursor:pointer}
+@keyframes fall{to{transform:translateY(470px) rotate(360deg)}}
+.stats{display:flex;justify-content:space-between;margin:15px;font-family:Arial}
+#envelope{font-size:100px;cursor:pointer;animation:bob 1.5s infinite}
+@keyframes bob{50%{transform:translateY(-12px)}}
+.letter{background:#fff1f6;color:#632b48;border-radius:18px;padding:22px;text-align:left;margin-top:20px}
+.letter p{color:#632b48}
+a{color:#ffb4d3}
+</style>
+</head>
+<body>
+<main>
+
+<section id="intro">
+<div style="font-size:55px">💗</div>
+<p>A little something made just for you</p>
+<h1>For Layan</h1>
+<p>I know things haven't been perfect, and there are things I wish I could take back. I made this little surprise from my heart, just for you.</p>
+<button onclick="startGame()">Start our little quest ✨</button>
+<p>Collect 20 hearts, roses and stars. You have 3 chances. ❤️</p>
+</section>
+
+<section id="play" class="hidden">
+<h2>A Little Love Quest</h2>
+<p>Tap the falling hearts, roses and stars!</p>
+<div class="stats">
+<span id="score">Collected: 0 / 20</span>
+<span id="lives">Chances: 3</span>
+</div>
+<div id="game"></div>
+</section>
+
+<section id="ending" class="hidden">
+<p>You made it! Every little heart was for you.</p>
+<h1>One Last Thing...</h1>
+<p>There's a letter waiting for you.</p>
+<div id="envelope" onclick="openLetter()">💌</div>
+<p>Tap the envelope to open it.</p>
+
+<div id="letter" class="letter hidden">
+<h2 style="text-align:center">My dearest Layan,</h2>
+<p>I'm truly sorry for the moments when I hurt you, disappointed you, or made you feel anything less than loved.</p>
+<p>I know that saying sorry cannot undo what happened. I don't expect a few words to fix everything. I want you to know that your feelings matter to me, and I never want you to feel that I take your heart or your patience for granted.</p>
+<p>I want to show you through my actions that I can listen better, understand you more, and treat your heart with the care it deserves.</p>
+<p>Thank you for being you. I hope that, when you're ready, you can let me make things right one step at a time.</p>
+<p style="text-align:right;font-style:italic">With all my love,<br>Someone who cares about you so much 💗</p>
+</div>
+<p>A song for this moment: <a href="https://www.youtube.com/results?search_query=Goo+Goo+Dolls+Iris+official" target="_blank">Iris – Goo Goo Dolls 🎵</a></p>
+</section>
+
+</main>
+<script>
+let score=0,lives=3,timer,active=false;
+const emojis=['💗','🌹','⭐','💖','💕','✨'];
+function show(id){
+['intro','play','ending'].forEach(x=>document.getElementById(x).classList.toggle('hidden',x!==id));
+}
+function update(){
+document.getElementById('score').textContent='Collected: '+score+' / 20';
+document.getElementById('lives').textContent='Chances: '+lives;
+}
+function startGame(){
+clearInterval(timer);
+score=0;lives=3;active=true;
+document.getElementById('game').innerHTML='';
+update();show('play');
+timer=setInterval(spawn,650);
+}
+function spawn(){
+if(!active)return;
+let el=document.createElement('div');
+el.className='fall';
+el.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+el.style.left=(Math.random()*85)+'%';
+let caught=false;
+el.onclick=()=>{
+if(caught||!active)return;
+caught=true;score++;el.remove();update();
+if(score>=20)finish();
+};
+el.addEventListener('animationend',()=>{
+if(!caught&&active){lives--;update();if(lives<=0)gameOver();}
+el.remove();
+});
+document.getElementById('game').appendChild(el);
+}
+function finish(){
+active=false;clearInterval(timer);show('ending');
+}
+function gameOver(){
+active=false;clearInterval(timer);
+document.getElementById('game').innerHTML='<p>You were so close! 💗</p><button onclick="startGame()">Try again</button>';
+}
+function openLetter(){
+document.getElementById('letter').classList.remove('hidden');
+document.getElementById('envelope').textContent='💖';
+}
+</script>
+</body>
+</html>
+

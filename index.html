@@ -1,117 +1,560 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>For Layan 💗</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Pacifico&display=swap" rel="stylesheet">
+
 <style>
-*{box-sizing:border-box}
-body{margin:0;background:linear-gradient(140deg,#180c20,#4c173d,#170d20);color:#fff0f6;font-family:Georgia,serif;text-align:center;min-height:100vh}
-main{padding:35px 18px;max-width:650px;margin:auto}
-section{background:#241326;border:1px solid #ff91bd66;border-radius:25px;padding:28px 20px;margin:35px auto;box-shadow:0 15px 50px #0007}
-h1{font-size:clamp(38px,10vw,65px);color:#ffc5df}
-h2{color:#ffb4d3}
-p{line-height:1.8;font-size:17px}
-button{background:linear-gradient(120deg,#ff83b9,#d83d88);border:0;border-radius:30px;padding:15px 25px;color:white;font-size:17px;font-weight:bold;margin:12px;cursor:pointer}
-.hidden{display:none!important}
-#game{height:400px;position:relative;overflow:hidden;background:#160d20;border:1px solid #ff9bc5;border-radius:18px}
-.fall{position:absolute;top:-45px;font-size:32px;animation:fall 3s linear forwards;cursor:pointer}
-@keyframes fall{to{transform:translateY(470px) rotate(360deg)}}
-.stats{display:flex;justify-content:space-between;margin:15px;font-family:Arial}
-#envelope{font-size:100px;cursor:pointer;animation:bob 1.5s infinite}
-@keyframes bob{50%{transform:translateY(-12px)}}
-.letter{background:#fff1f6;color:#632b48;border-radius:18px;padding:22px;text-align:left;margin-top:20px}
-.letter p{color:#632b48}
-a{color:#ffb4d3}
+:root {
+  --pink:#ffb6d5;
+  --pink-dark:#f17eaf;
+  --lavender:#d9c5ff;
+  --blue:#c7e9ff;
+  --cream:#fff8fc;
+  --text:#744b68;
+}
+
+* { box-sizing:border-box; }
+
+body {
+  margin:0;
+  min-height:100vh;
+  font-family:'Nunito',sans-serif;
+  color:var(--text);
+  text-align:center;
+  overflow-x:hidden;
+  background:linear-gradient(145deg,#fff0f7,#f5edff,#eaf7ff);
+}
+
+main {
+  width:min(92%,650px);
+  margin:0 auto;
+  padding:45px 0 65px;
+  position:relative;
+  z-index:2;
+}
+
+.card {
+  background:rgba(255,255,255,.82);
+  border:2px solid white;
+  border-radius:30px;
+  padding:30px 22px;
+  box-shadow:0 12px 35px #d89cbd30;
+  margin:20px 0;
+  animation:cardAppear .6s ease both;
+}
+
+h1 {
+  font-family:'Pacifico',cursive;
+  color:#ed83b2;
+  font-size:clamp(2.2rem,8vw,3.5rem);
+  font-weight:400;
+  margin:8px 0;
+}
+
+h2 { color:#bd83c9; }
+p { line-height:1.8; }
+
+.subtitle { font-size:1.05rem; }
+
+.decor {
+  font-size:2rem;
+  margin:12px;
+}
+
+button {
+  border:0;
+  border-radius:30px;
+  padding:14px 25px;
+  margin:8px;
+  background:linear-gradient(110deg,#ffacd0,#d6baff);
+  color:white;
+  font-family:inherit;
+  font-size:1rem;
+  font-weight:900;
+  cursor:pointer;
+  box-shadow:0 5px 14px #d69cbe55;
+  transition:transform .2s,box-shadow .2s;
+}
+
+button:hover {
+  transform:translateY(-3px) scale(1.03);
+  box-shadow:0 8px 20px #d69cbe77;
+}
+
+button:active { transform:scale(.95); }
+
+.secondary {
+  background:linear-gradient(110deg,#b9e4ff,#cbb6ff);
+}
+
+.hidden { display:none !important; }
+
+.float {
+  position:fixed;
+  bottom:-50px;
+  pointer-events:none;
+  z-index:1;
+  animation:floatUp linear forwards;
+  opacity:.65;
+}
+
+@keyframes floatUp {
+  to {
+    transform:translateY(-110vh) rotate(35deg);
+    opacity:0;
+  }
+}
+
+@keyframes cardAppear {
+  from { opacity:0; transform:translateY(15px) scale(.97); }
+  to { opacity:1; transform:translateY(0) scale(1); }
+}
+
+@keyframes popBurst {
+  0% { transform:scale(.2); opacity:1; }
+  100% { transform:scale(2.5) translateY(-55px); opacity:0; }
+}
+
+@keyframes glow {
+  0%,100% { box-shadow:0 0 10px #ffacd0; }
+  50% { box-shadow:0 0 30px #d6baff,0 0 45px #ffacd0; }
+}
+
+.ribbon { font-size:2.3rem; }
+
+#gameArea {
+  position:relative;
+  height:330px;
+  overflow:hidden;
+  border-radius:22px;
+  background:linear-gradient(150deg,#ffe4f1,#eee4ff);
+  border:2px dashed #f4afd0;
+  margin:18px 0;
+}
+
+.target {
+  position:absolute;
+  border:0;
+  background:transparent;
+  box-shadow:none;
+  padding:0;
+  margin:0;
+  font-size:2rem;
+  cursor:pointer;
+  animation:wiggle 1s infinite alternate;
+}
+
+@keyframes wiggle {
+  to { transform:rotate(18deg) scale(1.12); }
+}
+
+.stats {
+  display:flex;
+  justify-content:space-around;
+  gap:10px;
+}
+
+.stat {
+  background:white;
+  border-radius:16px;
+  padding:10px;
+  flex:1;
+  font-weight:900;
+}
+
+.spark {
+  position:fixed;
+  pointer-events:none;
+  z-index:10;
+  font-size:25px;
+  animation:popBurst .8s ease-out forwards;
+}
+
+#letter {
+  background:linear-gradient(145deg,#fff8fc,#fff0f7);
+  border:2px solid #ffd2e5;
+  border-radius:22px;
+  padding:24px;
+  text-align:left;
+  line-height:1.9;
+  white-space:pre-line;
+  box-shadow:0 5px 20px #ed83b222;
+}
+
+#letter p { margin:0; }
+
+.letterOpen {
+  animation:letterReveal 1s ease both;
+}
+
+@keyframes letterReveal {
+  from { opacity:0; transform:scale(.85) rotate(-2deg); }
+  to { opacity:1; transform:scale(1) rotate(0); }
+}
+
+footer {
+  font-size:.85rem;
+  opacity:.7;
+  margin-top:30px;
+}
+
+.musicNote {
+  font-size:1.5rem;
+  animation:wiggle 1s infinite alternate;
+  display:inline-block;
+}
 </style>
 </head>
+
 <body>
+
+<div id="floating"></div>
+
+<!-- YouTube music player -->
+<div id="musicContainer" style="position:fixed;left:-1000px;top:-1000px;width:300px;height:170px;overflow:hidden;">
+  <iframe
+    id="musicPlayer"
+    width="300"
+    height="170"
+    src=""
+    title="Background music"
+    allow="autoplay; encrypted-media"
+    referrerpolicy="strict-origin-when-cross-origin">
+  </iframe>
+</div>
+
 <main>
 
-<section id="intro">
-<div style="font-size:55px">💗</div>
-<p>A little something made just for you</p>
-<h1>For Layan</h1>
-<p>I know things haven't been perfect, and there are things I wish I could take back. I made this little surprise from my heart, just for you.</p>
-<button onclick="startGame()">Start our little quest ✨</button>
-<p>Collect 20 hearts, roses and stars. You have 3 chances. ❤️</p>
-</section>
+  <section class="card" id="welcome">
+    <div class="decor">🎀 🧸 💗</div>
+    <h1>For Layan</h1>
+    <p class="subtitle">A tiny little world made with a whole lot of love.</p>
+    <p>Someone very special has a little surprise waiting for her...</p>
+    <div class="decor">🌷 ✨ 🌷</div>
+    <button onclick="startGame()">Open your surprise 💌</button>
+    <p class="musicNote">🎵 A little music is waiting for you...</p>
+  </section>
 
-<section id="play" class="hidden">
-<h2>A Little Love Quest</h2>
-<p>Tap the falling hearts, roses and stars!</p>
-<div class="stats">
-<span id="score">Collected: 0 / 20</span>
-<span id="lives">Chances: 3</span>
-</div>
-<div id="game"></div>
-</section>
+  <section class="card hidden" id="game">
+    <div class="ribbon">💝</div>
+    <h2>A little love challenge!</h2>
+    <p>Catch 15 hearts for Layan! Tap the hearts as they appear. 💗</p>
 
-<section id="ending" class="hidden">
-<p>You made it! Every little heart was for you.</p>
-<h1>One Last Thing...</h1>
-<p>There's a letter waiting for you.</p>
-<div id="envelope" onclick="openLetter()">💌</div>
-<p>Tap the envelope to open it.</p>
+    <div class="stats">
+      <div class="stat">💗 <span id="score">0</span>/15</div>
+      <div class="stat">⏳ <span id="time">30</span>s</div>
+    </div>
 
-<div id="letter" class="letter hidden">
-<h2 style="text-align:center">My dearest Layan,</h2>
-<p>I'm truly sorry for the moments when I hurt you, disappointed you, or made you feel anything less than loved.</p>
-<p>I know that saying sorry cannot undo what happened. I don't expect a few words to fix everything. I want you to know that your feelings matter to me, and I never want you to feel that I take your heart or your patience for granted.</p>
-<p>I want to show you through my actions that I can listen better, understand you more, and treat your heart with the care it deserves.</p>
-<p>Thank you for being you. I hope that, when you're ready, you can let me make things right one step at a time.</p>
-<p style="text-align:right;font-style:italic">With all my love,<br>Someone who cares about you so much 💗</p>
-</div>
-<p>A song for this moment: <a href="https://www.youtube.com/results?search_query=Goo+Goo+Dolls+Iris+official" target="_blank">Iris – Goo Goo Dolls 🎵</a></p>
-</section>
+    <div id="gameArea">
+      <p style="padding:35px 12px">Ready, set, catch those hearts! 💕</p>
+    </div>
 
+    <p id="gameMessage">You've got this! 🌸</p>
+    <button id="playButton" onclick="beginRound()">Start playing 💗</button>
+  </section>
+
+  <section class="card hidden" id="won">
+    <div class="decor">🎉 💗 🥹</div>
+    <h1>You did it!</h1>
+    <p>You collected all the hearts!</p>
+    <p>But there's one more little surprise...</p>
+    <button onclick="showLetter()">Open your letter 💌</button>
+  </section>
+
+  <section class="card hidden" id="letterSection">
+    <div class="decor">💌 🌸 🎀</div>
+    <h1>Dear Layan...</h1>
+    <p>A little letter, from my heart to yours.</p>
+
+    <div id="letter">
+      <p>My dearest Layan,
+
+I made this little place just for you because you deserve to feel special.
+
+I'm sorry for the moments when I hurt you, disappointed you, or made you feel anything less than loved. I know that saying sorry is only the beginning. What matters is showing you through my actions that I mean it.
+
+I don't expect everything to be fixed by one letter or one little game. I just want you to know that you matter so much to me, and that I'm willing to listen, learn, and do better.
+
+Thank you for being you. I hope this little surprise brings a smile to your face.
+
+With all my love,
+Your favourite person 💗</p>
+    </div>
+
+    <div class="decor">🧸 💕 🌷</div>
+    <p>One last thing...</p>
+    <h2>You're my favourite notification. 💗</h2>
+
+    <button onclick="showHug()">Send a virtual hug 🫂</button>
+
+    <div id="hug" class="hidden">
+      <h1>BIGGEST HUG EVER!!</h1>
+      <p>🫂💗🫂💗🫂</p>
+    </div>
+  </section>
+
+  <footer>Made with love, just for Layan 💗</footer>
 </main>
+
 <script>
-let score=0,lives=3,timer,active=false;
-const emojis=['💗','🌹','⭐','💖','💕','✨'];
-function show(id){
-['intro','play','ending'].forEach(x=>document.getElementById(x).classList.toggle('hidden',x!==id));
+
+let score = 0;
+let timeLeft = 30;
+let timer = null;
+let spawnTimer = null;
+let playing = false;
+let audioContext = null;
+
+// Sound effects
+function sound(frequency=650,duration=.12,type='sine') {
+  try {
+    audioContext = audioContext ||
+      new (window.AudioContext || window.webkitAudioContext)();
+
+    if(audioContext.state === 'suspended') {
+      audioContext.resume();
+    }
+
+    const oscillator = audioContext.createOscillator();
+    const gain = audioContext.createGain();
+
+    oscillator.type = type;
+    oscillator.frequency.setValueAtTime(
+      frequency,audioContext.currentTime
+    );
+
+    gain.gain.setValueAtTime(.12,audioContext.currentTime);
+    gain.gain.exponentialRampToValueAtTime(
+      .001,audioContext.currentTime+duration
+    );
+
+    oscillator.connect(gain);
+    gain.connect(audioContext.destination);
+
+    oscillator.start();
+    oscillator.stop(audioContext.currentTime+duration);
+  } catch(e) {}
 }
-function update(){
-document.getElementById('score').textContent='Collected: '+score+' / 20';
-document.getElementById('lives').textContent='Chances: '+lives;
+
+function popSound() {
+  sound(750,.10);
+  setTimeout(()=>sound(1050,.12),65);
 }
-function startGame(){
-clearInterval(timer);
-score=0;lives=3;active=true;
-document.getElementById('game').innerHTML='';
-update();show('play');
-timer=setInterval(spawn,650);
+
+function winSound() {
+  [523,659,784,1047].forEach((n,i)=>{
+    setTimeout(()=>sound(n,.22),i*130);
+  });
 }
-function spawn(){
-if(!active)return;
-let el=document.createElement('div');
-el.className='fall';
-el.textContent=emojis[Math.floor(Math.random()*emojis.length)];
-el.style.left=(Math.random()*85)+'%';
-let caught=false;
-el.onclick=()=>{
-if(caught||!active)return;
-caught=true;score++;el.remove();update();
-if(score>=20)finish();
-};
-el.addEventListener('animationend',()=>{
-if(!caught&&active){lives--;update();if(lives<=0)gameOver();}
-el.remove();
-});
-document.getElementById('game').appendChild(el);
+
+function letterSound() {
+  [523,659,784].forEach((n,i)=>{
+    setTimeout(()=>sound(n,.35),i*180);
+  });
 }
-function finish(){
-active=false;clearInterval(timer);show('ending');
+
+// Background music
+function playMusic() {
+  const player = document.getElementById('musicPlayer');
+
+  if(!player.src || player.src === window.location.href) {
+    player.src =
+      'https://www.youtube-nocookie.com/embed/xK4ZqrLys_k?autoplay=1&loop=1&playlist=xK4ZqrLys_k&controls=1&playsinline=1';
+  }
 }
-function gameOver(){
-active=false;clearInterval(timer);
-document.getElementById('game').innerHTML='<p>You were so close! 💗</p><button onclick="startGame()">Try again</button>';
+
+// Visual heart explosion
+function burst(element) {
+  const rect = element.getBoundingClientRect();
+  const emojis = ['💗','💕','✨','🎀','🌸','💖'];
+
+  for(let i=0;i<12;i++) {
+    const spark = document.createElement('span');
+
+    spark.className = 'spark';
+    spark.textContent = emojis[i%emojis.length];
+    spark.style.left =
+      (rect.left+Math.random()*rect.width)+'px';
+    spark.style.top =
+      (rect.top+Math.random()*rect.height)+'px';
+
+    document.body.appendChild(spark);
+
+    setTimeout(()=>spark.remove(),850);
+  }
 }
-function openLetter(){
-document.getElementById('letter').classList.remove('hidden');
-document.getElementById('envelope').textContent='💖';
+
+// Floating decorations
+function floatDecor() {
+  const items = ['💗','💕','🎀','🌸','✨','🌷'];
+
+  const el = document.createElement('span');
+  el.className = 'float';
+  el.textContent =
+    items[Math.floor(Math.random()*items.length)];
+
+  el.style.left = Math.random()*100+'vw';
+  el.style.fontSize = (16+Math.random()*20)+'px';
+  el.style.animationDuration = (6+Math.random()*5)+'s';
+
+  document.getElementById('floating').appendChild(el);
+
+  setTimeout(()=>el.remove(),11000);
 }
+
+setInterval(floatDecor,650);
+
+// Section navigation
+function show(id) {
+  ['welcome','game','won','letterSection'].forEach(x=>{
+    document.getElementById(x).classList.add('hidden');
+  });
+
+  document.getElementById(id).classList.remove('hidden');
+}
+
+// Start experience
+function startGame() {
+  playMusic();
+  sound(600,.2);
+  burst(document.getElementById('welcome'));
+  show('game');
+}
+
+// Start mini game
+function beginRound() {
+  clearInterval(timer);
+  clearInterval(spawnTimer);
+
+  score = 0;
+  timeLeft = 30;
+  playing = true;
+
+  document.getElementById('score').textContent = score;
+  document.getElementById('time').textContent = timeLeft;
+  document.getElementById('gameMessage').textContent =
+    'Catch as many hearts as you can! 💕';
+
+  document.getElementById('playButton').classList.add('hidden');
+
+  const area = document.getElementById('gameArea');
+  area.innerHTML = '';
+
+  spawnHeart();
+
+  spawnTimer = setInterval(spawnHeart,650);
+
+  timer = setInterval(()=>{
+    timeLeft--;
+    document.getElementById('time').textContent = timeLeft;
+
+    if(timeLeft <= 0) endRound();
+  },1000);
+}
+
+// Spawn hearts
+function spawnHeart() {
+  if(!playing) return;
+
+  const area = document.getElementById('gameArea');
+  const heart = document.createElement('button');
+
+  heart.className = 'target';
+  heart.textContent =
+    ['💗','💖','💕','🌸','🎀'][Math.floor(Math.random()*5)];
+
+  heart.style.left =
+    Math.random()*(area.clientWidth-50)+'px';
+
+  heart.style.top =
+    Math.random()*(area.clientHeight-55)+'px';
+
+  heart.setAttribute('aria-label','Collect heart');
+
+  heart.onclick = ()=>{
+    if(!playing) return;
+
+    score++;
+
+    popSound();
+    burst(heart);
+
+    document.getElementById('score').textContent = score;
+
+    heart.remove();
+
+    if(score >= 15) {
+      playing = false;
+
+      clearInterval(timer);
+      clearInterval(spawnTimer);
+
+      winSound();
+      burst(area);
+
+      show('won');
+    }
+  };
+
+  area.appendChild(heart);
+
+  setTimeout(()=>heart.remove(),1600);
+}
+
+// Game ends
+function endRound() {
+  playing = false;
+
+  clearInterval(timer);
+  clearInterval(spawnTimer);
+
+  document.getElementById('gameArea').innerHTML =
+    '<p style="padding:35px 12px">So close! Let\'s try again! 💗</p>';
+
+  document.getElementById('gameMessage').textContent =
+    'You collected '+score+' hearts. You can do it!';
+
+  document.getElementById('playButton').textContent =
+    'Try again 🎀';
+
+  document.getElementById('playButton').classList.remove('hidden');
+
+  sound(300,.3);
+}
+
+// Open letter
+function showLetter() {
+  show('letterSection');
+
+  letterSound();
+  burst(document.getElementById('letterSection'));
+
+  const letter = document.getElementById('letter');
+  letter.classList.remove('letterOpen');
+
+  void letter.offsetWidth;
+
+  letter.classList.add('letterOpen');
+}
+
+// Virtual hug
+function showHug() {
+  document.getElementById('hug').classList.remove('hidden');
+
+  winSound();
+  burst(document.getElementById('hug'));
+
+  for(let i=0;i<18;i++) {
+    setTimeout(floatDecor,i*100);
+  }
+}
+
 </script>
 </body>
 </html>
